@@ -15,8 +15,6 @@ $(document).ready(function() {
         
         //set persistent storage
         localStorage.setItem(eventTime, eventText)
-
-        
     
 });
     //Grab values from local storage and display 
@@ -46,12 +44,10 @@ $(document).ready(function() {
             //test eventHour var
             // console.log(eventHour)
             
-            
             //If hours is less than 9 increase value by 12 for military time
             if (eventHour < 9) {
                 eventHour += 12
             }
-
 
             if (eventHour < currentHour){
                 $(this).addClass("past");
@@ -70,9 +66,6 @@ $(document).ready(function() {
             }
 
         })
-        
-     
-
 
     }
 
