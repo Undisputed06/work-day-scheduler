@@ -15,8 +15,6 @@ $(document).ready(function() {
         
         //set persistent storage
         localStorage.setItem(eventTime, eventText)
-
-        
     
 });
     //Grab values from local storage and display 
@@ -36,19 +34,20 @@ $(document).ready(function() {
     var colorPastPresentFuture = function() {
         var currentHour= moment().hour();
 
-        
+        //Grab hour value. strip off AM and PM to compare to current hour
         $(".time-block").each(function() {
-            var eventHour = parseInt($(this).children(".hour").text().replace("AM","").replace("PM",""))
+            var eventHour = parseInt($(this).children(".hour")
+            .text()
+            .replace("AM","")
+            .replace("PM",""))
             
             //test eventHour var
-            console.log(eventHour)
-            
+            // console.log(eventHour)
             
             //If hours is less than 9 increase value by 12 for military time
             if (eventHour < 9) {
                 eventHour += 12
             }
-
 
             if (eventHour < currentHour){
                 $(this).addClass("past");
@@ -67,13 +66,7 @@ $(document).ready(function() {
             }
 
         })
-        
-     
-
 
     }
 
 colorPastPresentFuture();
-
-
-    // if nothing in localStorage, create a new object to track all task status arrays
