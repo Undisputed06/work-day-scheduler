@@ -1,21 +1,25 @@
-var events = {}
 
 //Grab current day 
 $("#currentDay").text(moment().format("dddd, MMMM Do"));
 
-
+$(document).ready(function() {
+    loadEvents()
+})
     // save button was clicked
     $(".saveBtn").click(function() {
         // get form values
         var eventText = $(this).siblings(".description").val().trim();
-        console.log(eventText)
+        // console.log(eventText)
         var eventTime = $(this).siblings(".hour").text();
-        console.log(eventTime)
+        // console.log(eventTime)
         
         //set persistent storage
-        localStorage.setItem(eventTime, JSON.stringify(eventText))
+        localStorage.setItem(eventTime, eventText)
+
+        
     
 });
+    //Grab values from local storage and display 
     var loadEvents = function() {
             $("#nine .description").val(localStorage.getItem("9AM"))
             $("#ten .description").val(localStorage.getItem("10AM"))
@@ -27,8 +31,49 @@ $("#currentDay").text(moment().format("dddd, MMMM Do"));
             $("#four .description").val(localStorage.getItem("4PM"))
             $("#five .description").val(localStorage.getItem("5PM"))
     }
-    
-loadEvents();
+
+    //Change time block based off of time of event
+    var colorPastPresentFuture = function() {
+        var currentHour= moment().hour();
+
+        
+        $(".time-block").each(function() {
+            var eventHour = parseInt($(this).children(".hour").text().replace("AM","").replace("PM",""))
+            
+            //test eventHour var
+            console.log(eventHour)
+            
+            
+            //If hours is less than 9 increase value by 12 for military time
+            if (eventHour < 9) {
+                eventHour += 12
+            }
+
+
+            if (eventHour < currentHour){
+                $(this).addClass("past");
+                $(this).removeClass("present");
+                $(this).removeClass("future");
+            }
+            else if (eventHour === currentHour) {
+                $(this).removeClass("past");
+                $(this).addClass("present")
+                $(this).removeClass("future")
+            }
+            else {
+                $(this).removeClass("past");
+                $(this).removeClass("present")
+                $(this).addClass("future")
+            }
+
+        })
+        
+     
+
+
+    }
+
+colorPastPresentFuture();
 
 
     // if nothing in localStorage, create a new object to track all task status arrays
